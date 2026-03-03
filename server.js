@@ -131,13 +131,11 @@ app.get("/register", (req, res) => {
 app.post("/user-register", async(req, res)=> {
     const userEmail = req.body['email'];
     const userPassword = req.body['password'];
-    const repeatPassword = req.body['repeat_password'];
-    console.log(userPassword);
-    console.log(repeatPassword);
+    const repeatPassword = req.body['repeat_password']; 
     try{
         const result = await db.query("select * from post where email = $1", [userEmail]); 
         if (result.rows.length > 0){
-            res.send("Email already exist. Please try loggin in.")  
+            res.send("Email already exist. Please try loggin in.") 
         } 
         else
         {
