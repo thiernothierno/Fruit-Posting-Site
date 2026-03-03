@@ -85,6 +85,7 @@ app.get("/login", (req, res) => {
 
 app.post("/user-login", async(req, res) => {
     const inputEmail = req.body.email;
+    console.log(inputEmail)
     const inputPassword = req.body.password;
     console.log(inputPassword)
     try{
@@ -148,7 +149,8 @@ app.post("/user-register", async(req, res)=> {
                     res.send("Error hashing the password :", err)
                 } else{
                     const newUser = db.query("insert into post (email, password) values ($1, $2)", [userEmail, hash]);
-                    res.render("share-see-post.ejs");
+                    res.redirect("/login")   
+                    // res.render("share-see-post.ejs");
                     
                 }
             })
