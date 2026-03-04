@@ -113,6 +113,11 @@
 
     }
 
+    function imageClick(){
+        const name = document.getElementById("name").innerHTML;
+        alert(name)
+    }
+
     function myFunction(){
         const nodeList = document.querySelectorAll(".clickable");  
         console.log(nodeList)
@@ -125,6 +130,7 @@
     }
 
     getImage()
+    imageClick()
 
     window.onload = myFunction
    
