@@ -99,7 +99,7 @@
 
 
     // function to get an image from the list of images.
-    // setInterval(getImage, 5000)
+    setInterval(getImage, 5000)
     function getImage(){
         const key = Object.keys(fruits_images)
         const image_collections = document.getElementsByClassName("fruit-img");
@@ -130,7 +130,7 @@
     }
 
     getImage()
-    imageClick()
+    
 
     window.onload = myFunction
    
