@@ -61,13 +61,14 @@ app.post("/posts", (req, res) => {
 // Update a post 
 app.patch("/posts/:id", (req, res) => {
     const userID = parseInt(req.params.id);
+    console.log(userID)
     const data = posts.find((post) => post.id === userID);
     if(!data) return res.status(404).json({message:"Post not found"});
 
     if(req.body.name) data.name = req.body.name;
     if(req.body.email) data.email = req.body.email;
     if(req.body.favorite_fruit) data.favorite_fruit = req.body.favorite_fruit;
-    if(req.body.text) data.text = req.body.text;
+    if(req.body.text) data.text = req.body.text;  
     res.json(data);
 })
 

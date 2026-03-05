@@ -120,7 +120,8 @@
 
     function myFunction(){
         const nodeList = document.querySelectorAll(".clickable");  
-        console.log(nodeList)
+        console.log("Found:", nodeList.length);
+        // console.log(nodeList)
         for(let i=0; i < nodeList.length; i++){
             nodeList[i].addEventListener("click", function(){
                 alert(this.dataset.name)
@@ -132,7 +133,7 @@
     getImage()
     
 
-    window.onload = myFunction
+  myFunction()
    
   
    
