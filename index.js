@@ -2,6 +2,8 @@ import express from "express"
 import bodyParser from "body-parser"
 import pg from "pg"
 import bcrypt from "bcrypt"   
+import db from "./server.js"
+
 
 
 // Note: https://codetofun.com/express/app-put/
@@ -9,6 +11,9 @@ import bcrypt from "bcrypt"
 
 const app = express();
 const port = 4000;
+
+const result = await db.query("select * from post");
+console.log(result.rows)
 
 const posts = [
     {
@@ -37,6 +42,7 @@ app.get("/posts", (req, res) => {
 
 // Make a post
 app.post("/posts", (req, res) => {  
+
     const newID = currentID += 1; 
     const data = req.body;
     const new_post = {
@@ -53,7 +59,7 @@ app.post("/posts", (req, res) => {
 
     currentID = newID;
     posts.push(new_post)
-    console.log(posts)
+    // console.log(posts)
     res.status(201).json(new_post)  
 
 })
@@ -61,7 +67,6 @@ app.post("/posts", (req, res) => {
 // Update a post 
 app.patch("/posts/:id", (req, res) => {
     const userID = parseInt(req.params.id);
-    console.log(userID)
     const data = posts.find((post) => post.id === userID);
     if(!data) return res.status(404).json({message:"Post not found"});
 

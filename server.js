@@ -30,9 +30,11 @@ const db = new pg.Client({
 });
 
 
+
+
 db.connect();
 
-
+export default db;
 // Home Page 
 
 app.get("/", (req, res) => {
@@ -85,18 +87,14 @@ app.get("/login", (req, res) => {
 
 app.post("/user-login", async(req, res) => {
     const inputEmail = req.body.email;
-    console.log(inputEmail)
     const inputPassword = req.body.password;
-    console.log(inputPassword)
     try{
         const checkResult = await db.query("select * from post where email = $1", [inputEmail] );
         if(checkResult.rows.length > 0){
             const user = checkResult.rows[0];
             console.log(user)
             const storedPassword = user.password;
-            console.log(storedPassword);
             const storedID = user.id;
-            console.log(storedID)
             bcrypt.compare(inputPassword, storedPassword,  (err, result)=>{
                 console.log(result)
                 if(err){
