@@ -31,10 +31,9 @@ const db = new pg.Client({
 
 
 
-
 db.connect();
 
-export default db;
+
 // Home Page 
 
 app.get("/", (req, res) => {
@@ -85,6 +84,8 @@ app.get("/login", (req, res) => {
     res.render("login.ejs")
 })
 
+
+
 app.post("/user-login", async(req, res) => {
     const inputEmail = req.body.email;
     const inputPassword = req.body.password;
@@ -94,7 +95,7 @@ app.post("/user-login", async(req, res) => {
             const user = checkResult.rows[0];
             console.log(user)
             const storedPassword = user.password;
-            const storedID = user.id;
+            const CurrentUser = user.id;
             bcrypt.compare(inputPassword, storedPassword,  (err, result)=>{
                 console.log(result)
                 if(err){
@@ -120,7 +121,6 @@ app.post("/user-login", async(req, res) => {
 
     }
 })
-
 
 // Registration form
 app.get("/register", (req, res) => {  
@@ -217,6 +217,12 @@ app.get("/api/posts/delete/:id", async(req, res) => {
         res.status(500).json({message : "Error deleting post"})
     }
 })
+
+
+
+export const userDatabase = db;
+export const currentUser = "/user-login"
+
 
 
 app.listen(port, () => {

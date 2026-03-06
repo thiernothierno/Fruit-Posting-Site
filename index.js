@@ -2,7 +2,8 @@ import express from "express"
 import bodyParser from "body-parser"
 import pg from "pg"
 import bcrypt from "bcrypt"   
-import db from "./server.js"
+
+import { userDatabase, currentUser } from "./server.js"
 
 
 
@@ -12,8 +13,9 @@ import db from "./server.js"
 const app = express();
 const port = 4000;
 
-const result = await db.query("select * from post");
-console.log(result.rows)
+const result = await userDatabase.query("select * from post");
+// console.log(result.rows[0]);
+console.log(currentUser)
 
 const posts = [
     {
