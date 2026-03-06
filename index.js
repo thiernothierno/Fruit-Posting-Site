@@ -1,9 +1,8 @@
 import express from "express"
-import bodyParser from "body-parser"
-import pg from "pg"
-import bcrypt from "bcrypt"   
+import bodyParser from "body-parser"  
 
 import { userDatabase, currentUser } from "./server.js"
+
 
 
 
@@ -13,9 +12,18 @@ import { userDatabase, currentUser } from "./server.js"
 const app = express();
 const port = 4000;
 
-const result = await userDatabase.query("select * from post");
+// const result = userDatabase.query("select * from post");
 // console.log(result.rows[0]);
-console.log(currentUser)
+
+let userEmail; 
+export function userInfo(email){
+    userEmail = email;
+    return userEmail
+}
+
+console.log("Current UserEmail is: ", userEmail)
+
+
 
 const posts = [
     {

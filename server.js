@@ -4,6 +4,7 @@ import axios from "axios"
 import pg from "pg"
 import bcrypt from "bcrypt"  
 import 'dotenv/config'
+import { userInfo } from "./index.js"
 
 
 
@@ -86,6 +87,7 @@ app.get("/login", (req, res) => {
 
 
 
+
 app.post("/user-login", async(req, res) => {
     const inputEmail = req.body.email;
     const inputPassword = req.body.password;
@@ -95,7 +97,8 @@ app.post("/user-login", async(req, res) => {
             const user = checkResult.rows[0];
             console.log(user)
             const storedPassword = user.password;
-            const CurrentUser = user.id;
+            const userID = user.id;
+            userInfo(inputEmail, userID)
             bcrypt.compare(inputPassword, storedPassword,  (err, result)=>{
                 console.log(result)
                 if(err){
@@ -221,7 +224,8 @@ app.get("/api/posts/delete/:id", async(req, res) => {
 
 
 export const userDatabase = db;
-export const currentUser = "/user-login"
+export const currentUser = "/user-login";
+
 
 
 
