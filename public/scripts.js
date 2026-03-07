@@ -2,57 +2,58 @@
     let date = new Date().getFullYear();
 
     // List of avocado's quotes. 
-    const avocado_quotes = ["Avocado provides healthy fats that support heart health and lasting energy.",
-        "Packed with nutrients, avocado helps nourish the body from the inside out.",
-        "Avocado supports brain function with essential fatty acids.",
-        "Rich in fiber, avocado promotes healthy digestion and fullness.",
-        "Avocado delivers vitamins that strengthen overall wellness.",
-        "Healthy fats found in avocado help maintain balanced cholesterol levels.",
-        "Avocado fuels the body with clean, sustained energy.",
-        "Loaded with antioxidants, avocado helps protect the body from damage.",
-        "Avocado supports skin health and natural glow.",
-        "Natural fats in avocado help the body absorb nutrients better.",
-        "Avocado contributes to heart-friendly nutrition.",
-        "Eating avocado helps regulate blood sugar levels naturally.",
-        "Avocado is rich in potassium for muscle and nerve function.",
-        "Good fats from avocado support healthy metabolism.",
-        "Avocado helps keep you satisfied longer after meals.",
-        "A nutrient-dense fruit, avocado supports balanced eating.",
-        "Avocado provides fiber that supports digestive health.",
-        "Regular consumption of avocado supports immune health.",
-        "Avocado nourishes cells with essential fatty acids.",
-        "Healthy nutrition feels better when avocado is included.",
-        "Avocado supports eye health with natural antioxidants.",
-        "Balanced meals are easier with avocado on the plate.",
-        "Avocado promotes heart and vessel health.",
-        "Nutrient absorption improves when avocado is part of a meal.",
-        "Avocado supports healthy aging with essential nutrients.",
-        "Eating avocado supports weight management through satiety.",
-        "Avocado helps reduce inflammation naturally.",
-        "Whole foods like avocado strengthen overall wellness.",
-        "Avocado delivers magnesium that supports body function.",
-        "A daily dose of avocado supports steady energy levels.",
-        "Avocado contributes to strong bones through vitamin support.",
-        "Plant-based fats from avocado nourish the body gently.",
-        "Avocado supports cardiovascular health naturally.",
-        "Consuming avocado supports digestive comfort.",
-        "Avocado fuels active lifestyles with clean energy.",
-        "Nutrient-rich avocado supports mental clarity.",
-        "Avocado supports hormone balance through healthy fats.",
-        "Simple meals become more nourishing with avocado.",
-        "Avocado helps maintain healthy skin and hair.",
-        "Natural nutrition feels complete with avocado included.",
-        "Avocado supports muscle recovery after activity.",
-        "Fiber-rich avocado promotes gut health.",
-        "Avocado contributes to balanced cholesterol levels.",
-        "Clean eating is easier with avocado as a staple.",
-        "Avocado provides lasting fullness and satisfaction.",
-        "Eating avocado supports long-term wellness.",
-        "Avocado nourishes the body without heaviness.", 
-        "Plant-based nutrition shines with avocado included.",
-        "Avocado supports overall vitality and strength.",
-        "Balanced health feels achievable with avocado on the menu."
-        ]
+    const fruit_quotes = [
+  'An apple a day keeps the doctor away.',
+  'Fruits are nature’s candy, packed with vitamins and vitality.',
+  'Eating fruits daily is a gift you give to your body.',
+  'Fruit is proof that nature loves our health.',
+  'Let food be thy medicine, and fruits be thy prescription.',
+  'A smoothie full of fruits is a cup of happiness.',
+  'Fruits nourish your body and delight your senses.',
+  'Healthy bodies are built on colorful fruits.',
+  'Nature’s sweetness comes in the form of fruits.',
+  'Fruit today, energy tomorrow.',
+  'Your skin glows when your plate is full of fruits.',
+  'Every fruit is a vitamin-packed treasure.',
+  'Fruits are the simplest form of self-care.',
+  'The rainbow on your plate is a symphony of fruits.',
+  'Eat fruits, feel light, and let your body thank you.',
+  'Juicy fruits are a daily dose of joy.',
+  'Fruit is not just food; it’s fuel for life.',
+  'A life with fruits is a life with energy.',
+  'In every fruit, there is a story of health.',
+  'Fruits: the natural way to cleanse and energize your body.',
+  'Snack on fruits, not processed sugar.',
+  'Fruit is delicious medicine with no side effects.',
+  'Eating fruits is investing in your long-term wellness.',
+  'A diet rich in fruits is a diet rich in life.',
+  'Let fruits be the highlight of every meal.',
+  'Fruits teach us that sweetness can be natural.',
+  'Fruit nourishes the body, mind, and soul.',
+  'Nature packages nutrients beautifully in fruits.',
+  'Your heart loves fruits, and so does your body.',
+  'Fresh fruits are simple, powerful, and perfect.',
+  'Fruits: small in size, big in benefits.',
+  'Eating fruits daily is a celebration of health.',
+  'Fruit is nature’s multivitamin.',
+  'A colorful fruit salad is a feast for your health.',
+  'Every fruit carries the sunshine of nature.',
+  'Fruits make healthy living delicious.',
+  'Start your day with fruits, and your body will thank you.',
+  'Fruit is life in its most natural form.',
+  'Nature’s candy is healthier than any artificial sweet.',
+  'Fruits bring vitality, energy, and balance to life.',
+  'A bite of fruit is a bite of wellness.',
+  'Fruits are the cornerstone of a healthy diet.',
+  'Sweet, juicy, and nutritious: that’s fruit for you.',
+  'Fruit nourishes, refreshes, and energizes naturally.',
+  'Daily fruit intake is the secret to a long, healthy life.',
+  'Fruits keep the body active and the mind sharp.',
+  'Eating fruit is a simple way to honor your body.',
+  'Nature’s goodness is served fresh in fruits.',
+  'Fruits are delicious ambassadors of health.',
+  'A healthy day begins with a fruit-filled plate.'
+];
 
         const fruits_images = {
             Banana : "https://th.bing.com/th/id/OIP.DzzBtp9wRuY1VocmOurZ7gHaJE?w=152&h=187&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
@@ -88,14 +89,14 @@
 
         // function to get a random quote from the list of quotes.
     function getQuote(){
-        const randomQuote = avocado_quotes[Math.floor(Math.random() * avocado_quotes.length)];
+        const randomQuote = fruit_quotes[Math.floor(Math.random() * fruit_quotes.length)];
         document.getElementById("quotes").innerHTML = randomQuote;
     
     }
 
     // Display every 5 seconds a new quote from the list of quotes. 
      
-    //  setInterval(getQuote, 3000)
+     setInterval(getQuote, 5000)
 
 
     // function to get an image from the list of images.
@@ -152,7 +153,7 @@
     // }
 
 getImage()
-imageClick()
+// imageClick()
    
   
    
