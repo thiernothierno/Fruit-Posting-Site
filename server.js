@@ -5,6 +5,7 @@ import pg from "pg"
 import bcrypt from "bcrypt"  
 import 'dotenv/config'
 import { userInfo } from "./index.js"
+import userDatabase from "./userDatabase.js"
 
 
 
@@ -22,20 +23,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 
-const userDatabase = new pg.Client({
-    user : process.env.PG_USER,
-    host : process.env.PG_HOST,
-    database : process.env.PG_DATABASE,
-    password : process.env.PG_PASSWORD,
-    port : process.env.PG_PORT
-});
 
-
-
-
-userDatabase.connect();
-
-export const db = userDatabase
 
 // Home Page 
 
@@ -93,7 +81,7 @@ app.post("/user-login", async(req, res) => {
     const inputEmail = req.body.email;
     const inputPassword = req.body.password;
     try{
-        const checkResult = await db.query("select * from users where email = $1", [inputEmail] );
+        const checkResult = await userDatabase.query("select * from users where email = $1", [inputEmail] );
         if(checkResult.rows.length > 0){
             const user = checkResult.rows[0];
             console.log(user)
@@ -136,7 +124,7 @@ app.post("/user-register", async(req, res)=> {
     const userPassword = req.body['password'];
     const repeatPassword = req.body['repeat_password']; 
     try{
-        const result = await db.query("select * from users where email = $1", [userEmail]); 
+        const result = await userDatabase.query("select * from users where email = $1", [userEmail]); 
         if (result.rows.length > 0){
             res.send("Email already exist. Please try loggin in.") 
         } 

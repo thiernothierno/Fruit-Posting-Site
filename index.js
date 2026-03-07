@@ -1,12 +1,8 @@
 import express from "express"
 import bodyParser from "body-parser" 
+import 'dotenv/config'
 
-import { db } from "./server.js";
-
-import { currentUser } from "./server.js"
-
-
-
+import userDatabase from "./userDatabase.js"
 
 // Note: https://codetofun.com/express/app-put/
 
@@ -14,10 +10,11 @@ import { currentUser } from "./server.js"
 const app = express();
 const port = 4000;
 
-// const result = db.query("select * from users");
-// console.log(result);
+const result = await userDatabase.query("select * from users");
+console.log(result.rows)
 
 // Admin 
+
 const posts = [
     {
         'id' : 1, 
@@ -37,11 +34,19 @@ app.use(express.json());
 
 let EMAIL;
 let ID;
+
 export function userInfo(loginEmail, loginID){
     EMAIL = loginEmail;
     ID = loginID
+    console.log(ID, EMAIL)
 
 }
+
+
+
+
+
+
 
 
 
