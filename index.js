@@ -3,6 +3,7 @@ import bodyParser from "body-parser"
 import 'dotenv/config'
 
 import userDatabase from "./userDatabase.js"
+import postDatabase from "./postDatabase.js"
 
 // Note: https://codetofun.com/express/app-put/
 
@@ -10,11 +11,16 @@ import userDatabase from "./userDatabase.js"
 const app = express();
 const port = 4000;
 
-const result = await userDatabase.query("select * from users");
-console.log(result.rows)
+
+
+export async function  userInfo(loginEmail, loginID){
+    const result = await userDatabase.query("select * from users where id = $1", [loginID]);
+    console.log(result.rows)    
+
+}
+
 
 // Admin 
-
 const posts = [
     {
         'id' : 1, 
@@ -30,22 +36,7 @@ const posts = [
 ];
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));      
-app.use(express.json()); 
-
-let EMAIL;
-let ID;
-
-export function userInfo(loginEmail, loginID){
-    EMAIL = loginEmail;
-    ID = loginID
-    console.log(ID, EMAIL)
-
-}
-
-
-
-
-
+app.use(express.json());
 
 
 
@@ -86,27 +77,26 @@ app.get("/posts", (req, res) => {
 })
 
     // Make a post
-//     app.post("/posts", (req, res) => {  
+    app.post("/posts", (req, res) => {  
 
-//         const newID = currentID + 1; 
-//         const data = req.body;
-//         const new_post = {
-//             id : newID,
-//             name : data.name,
-//             email : data.email,
-//             favorite_fruit : data.favorite_fruit,
-//             text : data.text,
-//             date : new Date().toLocaleDateString(),   
-//             hour : new Date().getHours(),
-//             minute: new Date().getMinutes(),   
-//             second: new Date().getSeconds(),
-//         }
-//     currentID = newID
-//     posts.push(new_post)
-//     // console.log(posts)
-//     res.status(201).json(new_post)  
+        const newID = currentID + 1; 
+        const data = req.body;
+        const new_post = {
+            id : newID,
+            name : data.name,
+            email : data.email,
+            favorite_fruit : data.favorite_fruit,
+            text : data.text,
+            date : new Date().toLocaleDateString(),   
+            hour : new Date().getHours(),
+            minute: new Date().getMinutes(),   
+            second: new Date().getSeconds(),
+        }
+    currentID = newID
+    posts.push(new_post)
+    res.status(201).json(new_post)  
 
-// })
+})
 
 
 // Update a post 

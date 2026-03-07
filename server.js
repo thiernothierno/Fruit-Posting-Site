@@ -8,7 +8,6 @@ import { userInfo } from "./index.js"
 import userDatabase from "./userDatabase.js"
 
 
-
 const app = express();
 const port = 3000;
 const API_URL = "http://localhost:4000";
@@ -84,7 +83,6 @@ app.post("/user-login", async(req, res) => {
         const checkResult = await userDatabase.query("select * from users where email = $1", [inputEmail] );
         if(checkResult.rows.length > 0){
             const user = checkResult.rows[0];
-            console.log(user)
             const storedPassword = user.password;
             const userID = user.id;
             userInfo(inputEmail, userID)
@@ -138,7 +136,7 @@ app.post("/user-register", async(req, res)=> {
                 if(err){
                     res.send("Error hashing the password :", err)
                 } else{
-                    const newUser = db.query("insert into users (email, password) values ($1, $2)", [userEmail, hash]);
+                    const newUser = userDatabase.query("insert into users (email, password) values ($1, $2)", [userEmail, hash]);
                     res.redirect("/login")   
                     // res.render("share-see-post.ejs");
                     
@@ -165,11 +163,12 @@ app.get("/create-post", (req, res) => {
     res.render("post.ejs")  
 })
 
+
 app.post("/api/posts", async(req, res) => {
     try{
     const response = await axios.post(`${API_URL}/posts`, req.body);  
     console.log(response.data)
-    res.redirect("/get-all-posts");
+    res.redirect("/get-all-posts"); 
     } catch(error){
         res.status(500).json({message:"Error creating post."})
     }
