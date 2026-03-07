@@ -113,25 +113,46 @@
 
     }
 
-    function imageClick(){
-        const name = document.getElementById("name").innerHTML;
-        alert(name)
-    }
+    document.querySelectorAll(".clickable-img").forEach(img => {
+    img.addEventListener("click", () => {
+    window.location.href = "/create-post";
+    });
+    });
 
-    function myFunction(){
-        const nodeList = document.querySelectorAll(".clickable");  
-        console.log("Found:", nodeList.length);
-        // console.log(nodeList)
-        for(let i=0; i < nodeList.length; i++){
-            nodeList[i].addEventListener("click", function(){
-                alert(this.dataset.name)
-                console.log(this.dataset.name)
-            })
-        }
-    }
+     document.querySelectorAll(".non-clickable-img").forEach(img => {
+    img.addEventListener("click", () => {
+    alert("Please Register or Login in order to make a post.");
+    });
+    });
+
+
+
+    // document.getElementsById("fImage").addEventListener("click", function() {
+    // window.location.href = "/create-post";
+    // });
+
+    // function imageClick(){
+    //     const name = document.getElementById("name").innerHTML;
+    //     window.location.href = "/create-post"
+    //     const favorite_fruit = name;
+    // }
+
+   
+
+    // function myFunction(){
+    //     const nodeList = document.querySelectorAll(".clickable");  
+    //     console.log("Found:", nodeList.length);
+    //     // console.log(nodeList)
+    //     for(let i=0; i < nodeList.length; i++){
+    //         nodeList[i].addEventListener("click", function(){
+    //             alert(this.dataset.name)
+    //             console.log(this.dataset.name)
+    //         })
+    //     }
+    // }
 
 getImage()
-  myFunction()
+imageClick()
    
   
    

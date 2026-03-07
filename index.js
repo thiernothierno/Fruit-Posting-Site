@@ -4,6 +4,7 @@ import 'dotenv/config'
 
 import userDatabase from "./userDatabase.js"
 import postDatabase from "./postDatabase.js"
+import { currentUser } from "./server.js"
 
 // Note: https://codetofun.com/express/app-put/
 
@@ -15,12 +16,18 @@ const port = 4000;
 
 export async function  userInfo(loginEmail, loginID){
     const result = await userDatabase.query("select * from users where id = $1", [loginID]);
-    console.log(result.rows)    
+    console.log(result.rows) 
 
 }
 
 
+
 // Admin 
+
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));      
+app.use(express.json());
+
 const posts = [
     {
         'id' : 1, 
@@ -33,41 +40,7 @@ const posts = [
         "minute" : new Date().getMinutes(),
         "second" : new Date().getSeconds()
      }
-];
-app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: true }));      
-app.use(express.json());
-
-
-
-
-//     // Make a post
-//     app.post("/posts", (req, res) => {  
-
-//         const newID = loginID; 
-//         const data = req.body;
-//         const new_post = {
-//             id : newID,
-//             name : data.name,
-//             email : loginEmail,
-//             favorite_fruit : data.favorite_fruit,
-//             text : data.text,
-//             date : new Date().toLocaleDateString(),   
-//             hour : new Date().getHours(),
-//             minute: new Date().getMinutes(),   
-//             second: new Date().getSeconds(),
-//         }
-//     posts.push(new_post)
-//     // console.log(posts)
-//     res.status(201).json(new_post)  
-
-// })
-    
-
-
-
-
- 
+]; 
 
 let currentID = 1;
 
@@ -76,25 +49,25 @@ app.get("/posts", (req, res) => {
     res.json(posts)
 })
 
-    // Make a post
-    app.post("/posts", (req, res) => {  
+// Make a post
+app.post("/posts", (req, res) => {  
 
-        const newID = currentID + 1; 
-        const data = req.body;
-        const new_post = {
-            id : newID,
-            name : data.name,
-            email : data.email,
-            favorite_fruit : data.favorite_fruit,
-            text : data.text,
-            date : new Date().toLocaleDateString(),   
-            hour : new Date().getHours(),
-            minute: new Date().getMinutes(),   
-            second: new Date().getSeconds(),
-        }
-    currentID = newID
-    posts.push(new_post)
-    res.status(201).json(new_post)  
+    const newID = currentID + 1; 
+    const data = req.body;
+    const new_post = {
+        id : newID,
+        name : data.name,
+        email : data.email,
+        favorite_fruit : data.favorite_fruit,
+        text : data.text,
+        date : new Date().toLocaleDateString(),   
+        hour : new Date().getHours(),
+        minute: new Date().getMinutes(),   
+        second: new Date().getSeconds(),
+    }
+currentID = newID
+posts.push(new_post)
+res.status(201).json(new_post)  
 
 })
 

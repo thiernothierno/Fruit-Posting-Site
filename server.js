@@ -92,7 +92,7 @@ app.post("/user-login", async(req, res) => {
                 }
                 else{
                     if(result){
-                        res.render("share-see-post.ejs")
+                        res.render("share-see-post.ejs", {userID : userID})
                     }
                     else{
                         res.send("Incorrect password.")
