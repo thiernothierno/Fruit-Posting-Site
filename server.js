@@ -190,10 +190,19 @@ app.post("/api/posts", async(req, res) => {
     const favorite_fruit = req.body.favorite_fruit;
     const id = req.session.userID;
     try{
-    const result = await postDatabase.query("insert into posts (id, name, email, favorite_fruit) values ($1, $2, $3, $4)", [id, name, email, favorite_fruit])
-    const response = await axios.post(`${API_URL}/posts`, req.body);  
-    console.log(response.data)
-    res.redirect("/get-all-posts"); 
+        const result = await postDatabase.query("select exists (select 1 from posts where id = $1)", [id]);
+        console.log(result.rows[0])
+    if(!result.rows[0].exists){
+            const add = await postDatabase.query("insert into posts (id, name, email, favorite_fruit) values ($1, $2, $3, $4)", [id, name, email, favorite_fruit])
+            const response = await axios.post(`${API_URL}/posts`, req.body);  
+            console.log(response.data);
+            res.redirect("/get-all-posts"); 
+        } else{
+            const response = await axios.post(`${API_URL}/posts`, req.body);  
+            console.log(response.data);
+            res.redirect("/get-all-posts"); 
+        }
+        
     } catch(error){
         res.status(500).json({message:"Error creating post."})
     }

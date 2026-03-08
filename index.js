@@ -51,11 +51,11 @@ app.get("/posts", (req, res) => {
 })
 
 
-app.post("/posts-id", (req, res) => {
-    const id = req.body.userID;
-    console.log(id)
-    res.redirect("/posts")
-})
+// app.post("/posts-id", (req, res) => {
+//     const id = req.body.userID;
+//     console.log(id)
+//     res.redirect("/posts")
+// })
 
 
 
@@ -65,7 +65,7 @@ app.post("/posts", async (req, res) => {
     // console.log(userID)
     // const id = req.session.id;
     // console.log(id)
-
+    // const loginUser = await postDatabase.query("select * from posts")
     const newID = currentID + 1;
     const data = req.body;
     const new_post = {
