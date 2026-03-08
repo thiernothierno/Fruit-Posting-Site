@@ -5,7 +5,9 @@ import pg from "pg"
 import bcrypt from "bcrypt"  
 import 'dotenv/config'
 import { userInfo } from "./index.js"
-import userDatabase from "./userDatabase.js"
+import userDatabase from "./userDatabase.js";
+import postDatabase from "./postDatabase.js"
+import session from "express-session"
 
 
 const app = express();
@@ -15,7 +17,11 @@ const saltRounds = 5;
 
 let userAccess = false
 
-
+app.use(session({
+  secret: "secret-key",
+  resave: false,
+  saveUninitialized: true
+}));
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -88,7 +94,9 @@ app.post("/user-login", async(req, res) => {
             const match = await bcrypt.compare(inputPassword, storedPassword ) 
             if (match){
                 res.render("share-see-post.ejs", {userID : userID})
-                await axios.post("http://localhost:4000/posts-id", {userID, userID});
+                // await axios.post("http://localhost:4000/posts-id", {userID, userID});
+                req.session.userID = userID;
+                console.log("Session : ", req.session.userID)
                 
             }
              else{
@@ -174,7 +182,15 @@ app.get("/create-post", (req, res) => {
 
 
 app.post("/api/posts", async(req, res) => {
+    if(!req.session.userID){
+        res.redirect("/user-login")
+    }
+    const name = req.body.name;
+    const email = req.body.email;
+    const favorite_fruit = req.body.favorite_fruit;
+    const id = req.session.userID;
     try{
+    const result = await postDatabase.query("insert into posts (id, name, email, favorite_fruit) values ($1, $2, $3, $4)", [id, name, email, favorite_fruit])
     const response = await axios.post(`${API_URL}/posts`, req.body);  
     console.log(response.data)
     res.redirect("/get-all-posts"); 

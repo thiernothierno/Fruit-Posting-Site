@@ -21,11 +21,7 @@ export async function  userInfo(loginEmail, loginID){
 
 }
 
-app.use(session({
-  secret: "secret-key",
-  resave: false,
-  saveUninitialized: true
-}));
+
 
 // Admin 
 
@@ -67,8 +63,8 @@ app.post("/posts-id", (req, res) => {
 app.post("/posts", async (req, res) => {  
     // const userID = req.body.userID
     // console.log(userID)
-    const id = req.session.id;
-    console.log(id)
+    // const id = req.session.id;
+    // console.log(id)
 
     const newID = currentID + 1;
     const data = req.body;
