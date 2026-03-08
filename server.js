@@ -4,7 +4,7 @@ import axios from "axios"
 import pg from "pg"
 import bcrypt from "bcrypt"  
 import 'dotenv/config'
-import { userInfo } from "./index.js"
+
 import userDatabase from "./userDatabase.js";
 import postDatabase from "./postDatabase.js"
 import session from "express-session"
@@ -94,9 +94,9 @@ app.post("/user-login", async(req, res) => {
             const match = await bcrypt.compare(inputPassword, storedPassword ) 
             if (match){
                 res.render("share-see-post.ejs", {userID : userID})
-                // await axios.post("http://localhost:4000/posts-id", {userID, userID});
                 req.session.userID = userID;
-                console.log("Session : ", req.session.userID)
+                console.log("Session : ", req.session.userID);
+                // await axios.post("http://localhost:4000/posts-id", {userID, userID});
                 
             }
              else{
@@ -175,11 +175,14 @@ app.get("/logout", (req, res) => {
     res.redirect("/")
 })
 
+
 // Create a post 
 app.get("/create-post", (req, res) => {
+    if(!req.session.userID){
+        res.redirect("/user-login")
+    }
     res.render("post.ejs")  
 })
-
 
 app.post("/api/posts", async(req, res) => {
     if(!req.session.userID){
@@ -189,19 +192,11 @@ app.post("/api/posts", async(req, res) => {
     const email = req.body.email;
     const favorite_fruit = req.body.favorite_fruit;
     const id = req.session.userID;
+    const text = req.body.text;
     try{
-        const result = await postDatabase.query("select exists (select 1 from posts where id = $1)", [id]);
-        console.log(result.rows[0])
-    if(!result.rows[0].exists){
-            const add = await postDatabase.query("insert into posts (id, name, email, favorite_fruit) values ($1, $2, $3, $4)", [id, name, email, favorite_fruit])
-            const response = await axios.post(`${API_URL}/posts`, req.body);  
-            console.log(response.data);
-            res.redirect("/get-all-posts"); 
-        } else{
-            const response = await axios.post(`${API_URL}/posts`, req.body);  
-            console.log(response.data);
-            res.redirect("/get-all-posts"); 
-        }
+        const response = await axios.post(`${API_URL}/posts`, {name : name, email : email, userID : id, favorite_fruit : favorite_fruit, text : text} );  
+        console.log(response.data);
+        res.redirect("/get-all-posts");
         
     } catch(error){
         res.status(500).json({message:"Error creating post."})

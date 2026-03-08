@@ -15,13 +15,11 @@ const port = 4000;
 
 let isLogin = false
 
-export async function  userInfo(loginEmail, loginID){
-    const result = await userDatabase.query("select * from users where id = $1", [loginID]);
-    console.log(result.rows) 
+// export async function  userInfo(loginEmail, loginID){
+//     const result = await userDatabase.query("select * from users where id = $1", [loginID]);
+//     console.log(result.rows) 
 
-}
-
-
+// }
 
 // Admin 
 
@@ -51,37 +49,31 @@ app.get("/posts", (req, res) => {
 })
 
 
-// app.post("/posts-id", (req, res) => {
-//     const id = req.body.userID;
-//     console.log(id)
-//     res.redirect("/posts")
-// })
-
-
 
 // Make a post
 app.post("/posts", async (req, res) => {  
-    // const userID = req.body.userID
-    // console.log(userID)
-    // const id = req.session.id;
-    // console.log(id)
-    // const loginUser = await postDatabase.query("select * from posts")
-    const newID = currentID + 1;
-    const data = req.body;
+    const {userID, name, email, favorite_fruit, text} = req.body;
     const new_post = {
-        id : newID,
-        name : data.name,
-        email : data.email,
-        favorite_fruit : data.favorite_fruit,
-        text : data.text,
+        id : userID,
+        name : name,
+        email : email,
+        favorite_fruit : favorite_fruit,
+        text : text,
         date : new Date().toLocaleDateString(),   
         hour : new Date().getHours(),
         minute: new Date().getMinutes(),   
         second: new Date().getSeconds(),
     }
-// currentID = newID
-posts.push(new_post)
-res.status(201).json(new_post)  
+    posts.push(new_post)
+    const result = await postDatabase.query("SELECT EXISTS(SELECT 1 FROM posts WHERE id = $1)", [userID]);
+    console.log(result.rows[0]);
+    if(!result.rows[0].exits){
+        await postDatabase.query("insert into posts (id, name, email, favorite_fruit) values ($1, $2, $3, $4)", [userID, name, email, favorite_fruit])
+    }else{
+        
+    }
+   
+    res.status(201).json(new_post)  
 
 })
 
