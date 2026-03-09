@@ -93,11 +93,11 @@ app.get("/posts", async(req, res) => {
 
 // Make a post
 app.post("/posts", async (req, res) => {  
-    const {userID, name, email, favorite_fruit, text} = req.body;
+    const {userID, name, email, favorite_fruit, text, role} = req.body;
  
     const result = await postDatabase.query("SELECT EXISTS(SELECT 1 FROM posts WHERE id = $1)", [userID]);
     console.log(result.rows[0]);
-    await postDatabase.query("insert into posts (name, email, favorite_fruit, author_id, text) values ($1, $2, $3, $4, $5)", [name, email, favorite_fruit, userID, text])
+    await postDatabase.query("insert into posts (name, email, favorite_fruit, author_id, text, role) values ($1, $2, $3, $4, $5, $6)", [name, email, favorite_fruit, userID, text, role])
 
     res.json({message: "Post created"});
 
@@ -134,8 +134,9 @@ app.patch("/posts/:id", async(req, res) => {
 
     const ownerID = result.rows[0].author_id;
     console.log("OwnerID", ownerID);
-    console.log("UserID", userID)
-    if(ownerID !== parseInt(userID) && role !== 'admin'){
+    console.log("UserID", userID);
+    console.log("Role", role)
+    if(ownerID !== userID && role !== 'admin'){
         return res.status(403).send("Not authorized");
     }
 
@@ -152,9 +153,6 @@ app.patch("/posts/:id", async(req, res) => {
     console.log(err);
     return res.status(500).send("Error updating post");
 }
-
-    
-   
     
 })
 

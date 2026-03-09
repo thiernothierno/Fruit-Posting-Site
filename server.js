@@ -94,15 +94,14 @@ app.post("/user-login", async(req, res) => {
         const checkResult = await userDatabase.query("select * from users where email = $1", [inputEmail] );
         if(checkResult.rows.length > 0){
             const user = checkResult.rows[0];
+            console.log("CUrrent-User", user)
             const storedPassword = user.password;
             const match = await bcrypt.compare(inputPassword, storedPassword ) 
             if (match){
                 req.session.userID = user.id;
                 req.session.role = user.role;
-                const userID = req.session.userID;
-                const role = req.session.role;
                 console.log("Session : ", req.session.userID);
-                return res.render("share-see-post.ejs", {userID : userID, role : role})
+                return res.render("share-see-post.ejs")
                 
             }
              else{
@@ -185,7 +184,7 @@ app.post("/api/posts", async(req, res) => {
     const text = req.body.text;
     const role = req.session.role
     try{
-        const response = await axios.post(`${API_URL}/posts`, {name : name, email : email, userID : id, favorite_fruit : favorite_fruit, text : text, role:role} );  
+        const response = await axios.post(`${API_URL}/posts`, {name : name, email : email, userID : id, favorite_fruit : favorite_fruit, text : text, role : role} );  
         console.log(response.data);
         return res.redirect("/get-all-posts");
         
@@ -220,7 +219,8 @@ app.post("/api/posts/edit/:id", async(req, res) => {
     const favorite_fruit = req.body.favorite_fruit;
     const text = req.body.text;
     const userID = req.session.userID;
-    const role = req.session.role
+    const role = req.session.role;
+    console.log("USER-ROLE", req.session.role)
     console.log("USERID_SERVER1:", req.session.userID)
     try{
         const response = await axios.patch(`${API_URL}/posts/${req.params.id}`, {name: name, email:email, favorite_fruit:favorite_fruit, text:text, userID : userID, role : role});  

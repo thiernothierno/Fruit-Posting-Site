@@ -143,6 +143,10 @@ img{
   padding:5px;
 }
 
+.articles a {
+  font-size: 20px;
+}
+
 
 .delete {
   background-color: red;
@@ -150,10 +154,14 @@ img{
   margin-left:10px;
 }
 
+.post-content{
+  margin-bottom: 15px;
+}
+
 .user-post{
   background-color:darkgray;
   padding:5px;
-  width: 30%;
+  width: 25%;
   text-align: center;
 }
 
@@ -165,7 +173,6 @@ img{
 .user-post .comment{
    border: 1px solid #ccc;
    background-color: antiquewhite;
-   text-align: center;
 }
 
 

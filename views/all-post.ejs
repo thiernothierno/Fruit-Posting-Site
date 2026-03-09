@@ -1,46 +1,41 @@
 <%- include("partials/loginHeader.ejs") %>
    
+
    <div class="articles">
          <% posts.forEach(post => { %>
-        <a class="edit" href="/edit/<%=post.id%>">Edit</a>
-        <a class="delete" href="/api/posts/delete/<%=post.id %>">Delete</a>   
-       
-        <div class="user-post">
-            <div class="title">
-                <span><h3><%= post.favorite_fruit %></h3></span>
-            </div>
-            <div class="comment">
-                <span><h4><%= post.text %></h4></span>
-                <span><small>By <%= post.name %></small></span>
-                <span><small><%= post.post_date %></small></span>
-            </div>
-                     
-        </div>       
-           <!-- <table style="width: 40%;" class="post-table">
-                <tr>
-                    <th rowspan="2">
-                        <h4><%= post.name %></h4> 
-                        <h5 class="bottom-right"><small><%= post.date %>   <%= post.hour %>H:<%= post.minute%>M:<%= post.second %>S</small></h5> 
-
-                    </th>
-                    <th>
-                        <h4><small><%= post.email %></small></h4>     
-                    </th>
-                    <th>
-                        <h4><small><%= post.favorite_fruit %></small></h4>  
-                    </th>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <h4><small><%= post.text %></small></h4>
-                    </td>          
-                </tr>
-        </table> -->
-        
-        <br>
-      
+        <div class="post-content">
+            <a class="edit" href="/edit/<%=post.id%>">Edit</a>
+            <a class="delete" href="/api/posts/delete/<%=post.id %>">Delete</a>   
+            
+            <div class="user-post">
+                <div class="title">
+                    <span><h3><%= post.favorite_fruit %></h3></span>
+                </div>
+                <div class="comment">
+                    <span><h4><%= post.text %></h4></span>
+                    <span><small>By <%= post.name %></small></span>
+                    <span><small><%= post.post_date %></small></span>
+                </div>
+                        
+            </div> 
+        </div>      
+           
         <% }) %>
            
     </div>
 
+
     <%- include("partials/footer.ejs") %>
+
+
+
+
+
+
+
+
+
+
+
+   
+        
