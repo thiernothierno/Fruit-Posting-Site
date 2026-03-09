@@ -95,6 +95,7 @@ app.post("/user-login", async(req, res) => {
             if (match){
                 res.render("share-see-post.ejs", {userID : userID})
                 req.session.userID = userID;
+                req.session.role = user.role
                 console.log("Session : ", req.session.userID);
                 // await axios.post("http://localhost:4000/posts-id", {userID, userID});
                 
@@ -228,10 +229,11 @@ app.post("/api/posts/edit/:id", async(req, res) => {
     const email = req.body.email;
     const favorite_fruit = req.body.favorite_fruit;
     const text = req.body.text;
-    const userID = req.session.userID
+    const userID = req.session.userID;
+    const role = req.session.role
     console.log("USERID_SERVER1:", req.session.userID)
     try{
-    const response = await axios.patch(`${API_URL}/posts/${req.params.id}`, {name: name, email:email, favorite_fruit:favorite_fruit, text:text, userID : userID});  
+    const response = await axios.patch(`${API_URL}/posts/${req.params.id}`, {name: name, email:email, favorite_fruit:favorite_fruit, text:text, userID : userID, role : role});  
     console.log(response.data)
     res.redirect("/get-all-posts")
     } catch(error){
@@ -244,11 +246,13 @@ app.post("/api/posts/edit/:id", async(req, res) => {
 app.get("/api/posts/delete/:id", async(req, res) => {
     const userId = req.session.userID;
     const postId = req.params.id;
+    const role = req.session.role
     try{
         const response = await axios.delete(`${API_URL}/posts/${req.params.id}`, {
             data : {
                 userID : userId,
-                postId : postId
+                postId : postId,
+                role : role
             }
         });   
         res.redirect("/get-all-posts");
