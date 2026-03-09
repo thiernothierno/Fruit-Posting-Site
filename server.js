@@ -18,9 +18,10 @@ const saltRounds = 5;
 let userAccess = false
 
 app.use(session({
-  secret: "secret-key",
-  resave: false,
-  saveUninitialized: true
+  secret: process.env.SECRET_KEY, // used to sign the session cookie so the browser cannot tamper with it.
+  resave: false,   // prevents session overwrite
+  saveUninitialized: false,  // avoids creating empty sessions
+  cookie : {secure : false} // required when not using HTTPS
 }));
 
 app.use(express.static("public"));
@@ -57,8 +58,10 @@ app.get("/login-home", (req, res) => {
 // All posts 
 app.get("/get-all-posts", async(req, res) => {
     try {
+        const userID = req.session.userID;
+        const role = req.session.role;
         const response = await axios.get(`${API_URL}/posts`);
-        return res.render("all-post.ejs", {posts : response.data})
+        return res.render("all-post.ejs", {posts : response.data, userID : userID, role : role})
 
     } catch(error){
         return res.status(500).json({message:"Error fetching data"});
@@ -80,7 +83,9 @@ app.get("/login", (req, res) => {
     res.render("login.ejs")
 })
 
-
+app.get("/user-login", (req, res)=>{
+    res.render("login-register.ejs")
+})
 
 app.post("/user-login", async(req, res) => {
     const inputEmail = req.body.email;
@@ -90,14 +95,14 @@ app.post("/user-login", async(req, res) => {
         if(checkResult.rows.length > 0){
             const user = checkResult.rows[0];
             const storedPassword = user.password;
-            const userID = user.id;
             const match = await bcrypt.compare(inputPassword, storedPassword ) 
             if (match){
-                
-                req.session.userID = userID;
-                req.session.role = user.role
+                req.session.userID = user.id;
+                req.session.role = user.role;
+                const userID = req.session.userID;
+                const role = req.session.role;
                 console.log("Session : ", req.session.userID);
-                return res.render("share-see-post.ejs", {userID : userID})
+                return res.render("share-see-post.ejs", {userID : userID, role : role})
                 
             }
              else{
@@ -178,8 +183,9 @@ app.post("/api/posts", async(req, res) => {
     const favorite_fruit = req.body.favorite_fruit;
     const id = req.session.userID;
     const text = req.body.text;
+    const role = req.session.role
     try{
-        const response = await axios.post(`${API_URL}/posts`, {name : name, email : email, userID : id, favorite_fruit : favorite_fruit, text : text} );  
+        const response = await axios.post(`${API_URL}/posts`, {name : name, email : email, userID : id, favorite_fruit : favorite_fruit, text : text, role:role} );  
         console.log(response.data);
         return res.redirect("/get-all-posts");
         

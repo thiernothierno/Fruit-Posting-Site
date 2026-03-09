@@ -52,11 +52,30 @@ app.use(express.json());
 //     if(req.body.text) data.text = req.body.text;  
 //     res.json(data);
 
+// Tracking the name of all fruit posted
+const post = {}; 
+const result = await postDatabase.query("select * from posts");
+const fruits = result.rows;
+fruits.forEach(fruit => {
+    const key = fruit.favorite_fruit.toLowerCase()
+    if(key in post){
+        post[key] += 1;
+    }
+    else{ 
+        post[key] = 1;
+    }
+});
+
+console.log(post) 
+
 // Get all post
 app.get("/posts", async(req, res) => {
-    const posts = await postDatabase.query("select * from posts")
+    const posts = await postDatabase.query("select * from posts");
     res.json(posts.rows)
+
 })
+
+
 
    // const new_post = {
     //     id : userID,
