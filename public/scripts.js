@@ -127,6 +127,12 @@
     });
 
 
+    document.getElementById("Mybtn").addEventListener("click", upvoteFruit);
+
+    function upvoteFruit(){ 
+        document.getElementById("upvote_fruit").innerHTML = new Date();
+    }
+
 
     // document.getElementsById("fImage").addEventListener("click", function() {
     // window.location.href = "/create-post";

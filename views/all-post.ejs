@@ -1,8 +1,9 @@
 <%- include("partials/loginHeader.ejs") %>
     <div class="fruit-with-most-vote">
       
-        <button <%= upvote_fruit %>>Click to see the upvoted fruit</button>
-        <!-- <%= upvote_fruit %> -->
+        <button onclick="upvoteFruit()">Click to see the upvoted fruit</button>
+        <p id="upvote_fruit"><%= upvote_fruit %></p>
+     
     </div>
    <div class="articles">
          <% posts.forEach(post => { %>
@@ -28,7 +29,7 @@
     </div>
 
   
-
+     <script src="/scripts.js"> </script> 
 
     <%- include("partials/footer.ejs") %>
 
