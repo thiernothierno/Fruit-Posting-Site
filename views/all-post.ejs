@@ -2,32 +2,37 @@
     <div class="fruit-with-most-vote">
       
         <h3>Most upvoted fruit : <p id="upvote_fruit"><%= upvote_fruit %></p></h3>
+       
      
     </div>
     <table>
         <div class="articles">
-            <% posts.forEach(post => { %>
-                <tr>
-                        <div class="post-content">
-                            <a class="edit" href="/edit/<%=post.id%>">Edit</a>
-                            <a class="delete" href="/api/posts/delete/<%=post.id %>">Delete</a>   
-                            
-                            <div class="user-post">
-                                <div class="title">
-                                    <span><h3><%= post.favorite_fruit %></h3></span>
-                                </div>
-                                <div class="comment">
-                                    <span><h4><%= post.text %></h4></span>
-                                    <span><small>By <%= post.name %></small></span>
-                                    <span><small><%= post.post_date %></small></span>
-                                </div>
-                            </div> 
-                        </div>
-                     
-                </tr>
-            
+           
+            <% posts.forEach(post => { %>  
+                
+                <th>
+                    <div class="post-content">
+                        <a class="edit" href="/edit/<%=post.id%>">Edit</a>
+                        <a class="delete" href="/api/posts/delete/<%=post.id %>">Delete</a>   
+                        
+                        <div class="user-post">
+                            <div class="title">
+                                <span><h3><%= post.favorite_fruit %></h3></span>
+                            </div>
+                            <div class="comment">
+                                <span><h4><%= post.text %></h4></span>
+                                <span><small>By <%= post.name %></small></span>
+                                <span><small><%= post.post_date %></small></span>
+                            </div>
+                        </div> 
+                    </div>
+                </th> 
+                 
+                   
             <% }) %>
-            
+
+        
+          
         </div>
     </table>
 

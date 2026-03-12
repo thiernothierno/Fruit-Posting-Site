@@ -156,16 +156,18 @@ img{
 
 .fruit-with-most-vote {
   text-align: center;
-  color:blue;
 }
-.post-content{
+
+
+
+ .post-content{
   margin-bottom: 15px;
 }
 
 .user-post{
-  background-color:darkgray;
+  background-color:darkgray;  
   padding:5px;
-  width: 25%;
+  width: 100%;
   text-align: center;
 }
 
@@ -177,7 +179,7 @@ img{
 .user-post .comment{
    border: 1px solid #ccc;
    background-color: antiquewhite;
-}
+} 
 
 
 /* .post-table th, td{

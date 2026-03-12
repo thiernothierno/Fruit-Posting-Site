@@ -52,8 +52,10 @@ app.use(express.json());
 //     if(req.body.text) data.text = req.body.text;  
 //     res.json(data);
 
-// Tracking the name of all fruit posted
+// Tracking the name of all fruit posted  
 const post = {}; 
+const total_post = await postDatabase.query("Select count(*) from posts")
+// console.log("total post" , total_post)
 
 // Get all post
 app.get("/posts", async(req, res) => {
@@ -77,11 +79,10 @@ app.get("/posts", async(req, res) => {
             .map(row => row.favorite_fruit);
     }
 
-    console.log("Most Upvote Fruit is: ", upvote_fruit);
-
     res.json({
         posts : posts.rows,
-        upvote_fruit : upvote_fruit
+        upvote_fruit : upvote_fruit,
+       
     });
 
 })
