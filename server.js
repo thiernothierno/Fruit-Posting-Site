@@ -43,18 +43,6 @@ app.get("/login-home", (req, res) => {
 })
 
 
-// // Rendering the home page
-// app.get("/home", async(req, res) => {
-//     try{
-//     const response = await axios.get(`${API_URL}/posts`);
-//     res.render("index.ejs", {posts : response.data})
-//     } catch(error){
-//         res.status(500).json({message:"Error fetching data"})
-//     }
-// })
-
-
-
 // All posts 
 app.get("/get-all-posts", async(req, res) => {  
     try {
@@ -78,6 +66,17 @@ app.get("/about", (req, res) =>{
 // Route to render the Contact page
 app.get("/contact", (req, res) =>{  
     res.render("contact.ejs")
+})
+
+app.post("/contact-data", async(req, res) =>{
+    const name = req.body.name;
+    const email = req.body.email;
+    const comment = req.body.text;
+    try{
+        const response = await axios.post(`${API_URL}/contact`, {name : name, email : email, comment : comment})
+    }catch(err){
+        return res.status(500).json({message: "Error updating post"})
+    }
 })
 
 // login form
