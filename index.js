@@ -2,9 +2,9 @@ import express from "express"
 import bodyParser from "body-parser" 
 import 'dotenv/config'
 import session from "express-session"
-
 import userDatabase from "./userDatabase.js"
 import postDatabase from "./postDatabase.js"
+import contactDatabase from "./contactDatabase.js"
 import { currentUser } from "./server.js"
 
 // Note: https://codetofun.com/express/app-put/
@@ -51,6 +51,17 @@ app.use(express.json());
 //     if(req.body.favorite_fruit) data.favorite_fruit = req.body.favorite_fruit;
 //     if(req.body.text) data.text = req.body.text;  
 //     res.json(data);
+
+// Collect comment data
+
+app.post("/contact", async(req, res) => {
+    const {name, email, comment} = req.body;
+    await contactDatabase.query("insert into contacts (name, email, comment) values ($1, $2, $3 )", [name, email, comment])
+    res.json({message: "Comment successfuly added."});
+})
+
+
+
 
 // Tracking the name of all fruit posted  
 const post = {}; 
