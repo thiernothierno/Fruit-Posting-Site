@@ -127,10 +127,16 @@
     });
 
 
-    document.getElementById("Mybtn").addEventListener("click", upvoteFruit);
+    // document.getElementById("Mybtn").addEventListener("click", upvoteFruit);  
 
     function upvoteFruit(){ 
-        document.getElementById("upvote_fruit").innerHTML = new Date();
+       const fruit =  document.getElementById("upvoted_fruit")
+       // show most upvoted fruit.
+        fruit.style.display="block"
+        // Hide after 3 seconds
+        setTimeout(() => {
+        fruit.style.display = "none";
+        }, 3000);
     }
 
 

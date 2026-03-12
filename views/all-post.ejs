@@ -1,9 +1,7 @@
 <%- include("partials/loginHeader.ejs") %>
     <div class="fruit-with-most-vote">
-      
-        <h3>Most upvoted fruit : <p id="upvote_fruit"><%= upvote_fruit %></p></h3>
-       
-     
+        <button class="upvotedFruit" onclick="upvoteFruit()">Most Upvoted Fruit:</button>
+        <p class="fruitName" id="upvoted_fruit" style="display: none"><%= upvote_fruit %></p>
     </div>
         <div class="articles">
             <% posts.forEach(post => { %>  
