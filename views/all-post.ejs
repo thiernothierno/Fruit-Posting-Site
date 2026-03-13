@@ -1,13 +1,11 @@
 <%- include("partials/loginHeader.ejs") %>
     <div class="fruit-with-most-vote">
-        <button class="upvotedFruit" onclick="upvoteFruit()">Most Upvoted Fruit:</button>
+        <button class="upvotedFruit" onclick="upvoteFruit()">Most Upvoted Fruit</button>
         <p class="fruitName" id="upvoted_fruit" style="display: none"><%= upvote_fruit %></p>
     </div>
         <div class="articles">
             <% posts.forEach(post => { %>  
-                    <div class="post-content">
-                        <a class="edit" href="/edit/<%=post.id%>">Edit</a>
-                        <a class="delete" href="/api/posts/delete/<%=post.id %>">Delete</a>   
+                    <div class="post-content"> 
                         
                         <div class="user-post">
                             <div class="title">
@@ -19,6 +17,9 @@
                                 <span><small><%= post.post_date %></small></span>
                             </div>
                         </div> 
+                        <a class="delete" href="/api/posts/delete/<%=post.id %>">Delete</a> 
+                        <a class="edit" href="/edit/<%=post.id%>">Edit</a>
+                             
                     </div>     
             <% }) %>
 

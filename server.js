@@ -68,12 +68,15 @@ app.get("/contact", (req, res) =>{
     res.render("contact.ejs")
 })
 
+
 app.post("/contact-data", async(req, res) =>{
     const name = req.body.name;
     const email = req.body.email;
     const comment = req.body.text;
     try{
-        const response = await axios.post(`${API_URL}/contact`, {name : name, email : email, comment : comment})
+        const response = await axios.post(`${API_URL}/contact`, {name : name, email : email, comment : comment});
+        console.log(response.data)
+        return res.redirect("/")
     }catch(err){
         return res.status(500).json({message: "Error updating post"})
     }
