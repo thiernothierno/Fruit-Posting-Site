@@ -107,7 +107,8 @@ app.post("/user-login", async(req, res) => {
                 
             }
              else{
-                return res.send("Incorrect password.")
+                // return res.send("Incorrect password.")
+                return res.render("login-error.ejs")
             }
 
         }else{

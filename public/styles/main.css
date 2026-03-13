@@ -198,9 +198,7 @@ img{
   text-align: center;
 }
 
-/* .articles .post-content .user-post .comment h4{
-  text-align: center;
-} */
+
 
 .fruit-table{
   margin-left: auto;
@@ -231,7 +229,6 @@ img{
 
 
 /* About Page */
-
 .about-page {
     max-width: 800px;
     margin: 20px auto;
@@ -289,7 +286,6 @@ input[type=submit]:hover {
 }
 
 /* login page */
-
 .sign-in-form {
   color: darkblue;
   text-align: center;
@@ -302,10 +298,10 @@ input[type=submit]:hover {
   padding: 40px;
 }
 
-.btn-log{
-  background-color: blue;
+.btn-log, .log-error,  .reset-password{
+  background-color: gray;
   border: none;
-  color: white;
+  color: yellow;
   padding: 20px 30px;
   text-align: center;
   text-decoration: none;
@@ -316,3 +312,19 @@ input[type=submit]:hover {
   border-radius: 4px;
   float: none;
 }
+
+/* login Error Page  */
+.login-error{
+  text-align: center;
+}
+
+.login-error h2{
+  color:red;
+  font-size: 30px;
+}
+
+.login-error p{
+  color:black;
+  font-size: 25px;
+}
+
