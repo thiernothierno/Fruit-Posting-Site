@@ -4,9 +4,7 @@ import axios from "axios"
 import pg from "pg"
 import bcrypt from "bcrypt"  
 import 'dotenv/config'
-
 import userDatabase from "./userDatabase.js";
-import postDatabase from "./postDatabase.js"
 import session from "express-session"
 
 
@@ -257,11 +255,6 @@ app.get("/api/posts/delete/:id", async(req, res) => {
         return res.status(500).json({message : "Error deleting post"})
     }
 })
-
-
-
-
-export const currentUser = "/user-login";
 
 
 

@@ -194,6 +194,10 @@ img{
   background-color:antiquewhite;
 }
 
+.articles .post-content .user-post .comment p{
+  text-align: center;
+}
+
 /* .articles .post-content .user-post .comment h4{
   text-align: center;
 } */

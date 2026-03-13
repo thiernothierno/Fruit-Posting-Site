@@ -2,10 +2,9 @@ import express from "express"
 import bodyParser from "body-parser" 
 import 'dotenv/config'
 import session from "express-session"
-import userDatabase from "./userDatabase.js"
 import postDatabase from "./postDatabase.js"
 import contactDatabase from "./contactDatabase.js"
-import { currentUser } from "./server.js"
+
 
 // Note: https://codetofun.com/express/app-put/
 
