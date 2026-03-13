@@ -107,7 +107,6 @@ app.post("/user-login", async(req, res) => {
                 
             }
              else{
-                // return res.send("Incorrect password.")
                 return res.render("login-error.ejs")
             }
 
@@ -133,7 +132,7 @@ app.post("/user-register", async(req, res)=> {
     try{
         const result = await userDatabase.query("select * from users where email = $1", [userEmail]); 
         if (result.rows.length > 0){
-            return res.send("Email already exist. Please try loggin in.") 
+            return res.render("registration-error.ejs")
         } 
         else
         {
