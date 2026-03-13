@@ -80,11 +80,53 @@ app.post("/contact-data", async(req, res) =>{
     }
 })
 
+//  Registration form
+app.get("/register", (req, res) => {  
+    res.render("register.ejs")
+})
+
+// User registration.
+app.post("/user-register", async(req, res)=> {
+    const userEmail = req.body['email'];
+    const userPassword = req.body['password'];
+    const repeatPassword = req.body['repeat_password']; 
+    try{
+        const result = await userDatabase.query("select * from users where email = $1", [userEmail]); 
+        if (result.rows.length > 0){
+            return res.render("registration-error.ejs")
+        } 
+        else
+        {
+            if(userPassword != repeatPassword){
+                return res.send("Password don't match. Try Again.");
+            } 
+            else{
+                bcrypt.hash(userPassword, saltRounds, async (err, hash)=>{
+                if(err){
+                    return res.send("Error hashing the password :", err)
+                } else{
+                    const newUser = userDatabase.query("insert into users (email, password) values ($1, $2)", [userEmail, hash]);
+                    return res.redirect("/login")   
+                    
+                }
+            })
+
+            }
+            
+        }
+
+    }catch(err){ 
+        console.log(err);
+    }
+
+})
+
 // login form
 app.get("/login", (req, res) => {
     res.render("login.ejs")
 })
 
+// User login
 app.get("/user-login", (req, res)=>{
     res.render("login-register.ejs")
 })
@@ -115,51 +157,60 @@ app.post("/user-login", async(req, res) => {
         }
 
     }catch(err){
-
+        console.log(err);
     }
 })
 
-// Registration form
-app.get("/register", (req, res) => {  
-    res.render("register.ejs")
+// Password reset form
+app.get("/password-reset", (req, res) => {
+    return res.render("reset-password.ejs")
 })
 
-// Adding new user into the database
-app.post("/user-register", async(req, res)=> {
-    const userEmail = req.body['email'];
-    const userPassword = req.body['password'];
-    const repeatPassword = req.body['repeat_password']; 
+// Password reset
+app.post("/reset-password", async(req, res) => {
+    const email = req.body.email;
+    const newPassword = req.body.new_password;
+    const repeatNewPassword = req.body.repeat_new_password;
     try{
-        const result = await userDatabase.query("select * from users where email = $1", [userEmail]); 
-        if (result.rows.length > 0){
-            return res.render("registration-error.ejs")
-        } 
-        else
-        {
-            if(userPassword != repeatPassword){
+        const result = await userDatabase.query("select * from users where email=$1", [email]);
+        if(result.rows.length > 0){
+            const user = result.rows[0];
+            const storedPassword = user.password;
+             if(newPassword != repeatNewPassword){
                 return res.send("Password don't match. Try Again.");
             } 
             else{
-                bcrypt.hash(userPassword, saltRounds, async (err, hash)=>{
+                bcrypt.hash(newPassword, saltRounds, async (err, hash)=>{
                 if(err){
                     return res.send("Error hashing the password :", err)
                 } else{
-                    const newUser = userDatabase.query("insert into users (email, password) values ($1, $2)", [userEmail, hash]);
-                    return res.redirect("/login")   
-                    // res.render("share-see-post.ejs");
-                    
+                    await userDatabase.query(
+                    `UPDATE users
+                    SET password=$1
+                    WHERE email=$2`,
+                    [hash, email]
+                    );
+                    return res.redirect("/login")     
                 }
             })
 
             }
-            
-        }
 
-    }catch(err){ 
+        }else{
+            return res.redirect("/register")
+        }
+    }catch(err){
         console.log(err);
     }
 
 })
+
+
+
+
+
+
+
 
 // logout 
 app.get("/logout", (req, res) => {  
