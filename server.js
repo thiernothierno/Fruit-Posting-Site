@@ -308,7 +308,8 @@ app.get("/api/posts/delete/:id", async(req, res) => {
         });   
         return res.redirect("/get-all-posts");
     }catch(error){
-        return res.status(500).json({message : "Error deleting post"})
+        // return res.status(500).json({message : "Error deleting post"})
+        return res.render("delete_error.ejs")
     }
 })
 

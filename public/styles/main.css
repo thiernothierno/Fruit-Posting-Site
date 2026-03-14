@@ -19,7 +19,7 @@ body{
 }
 
 .title h1 {
-  color:red;
+  color:#008CBA;
 }
 .title h1, .title p {
   margin:0;
@@ -128,7 +128,7 @@ img{
 }
 
 #comment{
-  color:red;
+  color:#008CBA;
   letter-spacing: 1px;
   font-size: 25px;
 }
@@ -150,7 +150,7 @@ img{
 }
 .fruitName{
   font-size: 30px;
-  color:yellow;
+  color:black;
 }
 
 .edit {
