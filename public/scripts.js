@@ -86,6 +86,8 @@
             Grapefruit : "https://th.bing.com/th/id/OIP.pITzY9neU8xyuYE62rLvVAHaEv?w=273&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
 
         }
+    
+       
 
         // function to get a random quote from the list of quotes.
     function getQuote(){
@@ -140,38 +142,28 @@
     }
 
 
-    // Return current year
- 
-    document.getElementById("cyear").innerHTML = new Date().getFullYear();
-
-
-    // document.getElementsById("fImage").addEventListener("click", function() {
-    // window.location.href = "/create-post";
-    // });
-
-    // function imageClick(){
-    //     const name = document.getElementById("name").innerHTML;
-    //     window.location.href = "/create-post"
-    //     const favorite_fruit = name;
-    // }
-
-   
-
-    // function myFunction(){
-    //     const nodeList = document.querySelectorAll(".clickable");  
-    //     console.log("Found:", nodeList.length);
-    //     // console.log(nodeList)
-    //     for(let i=0; i < nodeList.length; i++){
-    //         nodeList[i].addEventListener("click", function(){
-    //             alert(this.dataset.name)
-    //             console.log(this.dataset.name)
-    //         })
-    //     }
-    // }
-
 getImage()
-// imageClick()
+
    
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function userProfile() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
   
    
   
