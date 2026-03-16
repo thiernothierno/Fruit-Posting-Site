@@ -181,7 +181,7 @@ app.delete("/posts/:id", async(req, res) => {
         if(ownerID !== userID && role !== 'admin'){
             return res.status(403).send("Not authorized");
         }
-        await postDatabase.query("delete from posts where id = $1", [postId])
+        await postDatabase.query("delete from posts where id = $1", [postId]) 
         return res.json({ message: "Post deleted" });
     } catch(err){
     console.log(err);

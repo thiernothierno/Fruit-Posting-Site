@@ -130,7 +130,7 @@
     // document.getElementById("Mybtn").addEventListener("click", upvoteFruit);  
 
     function upvoteFruit(){ 
-       const fruit =  document.getElementById("upvoted_fruit")
+       const fruit =  document.getElementById("upvoted_fruit") 
        // show most upvoted fruit.
         fruit.style.display="block"
         // Hide after 3 seconds
@@ -142,7 +142,7 @@
 
     // Return current year
  
-    document.getElementById("cyear").innerHTML = new Date().getFullYear();
+    document.getElementById("cyear") = new Date().getFullYear();
 
 
     // document.getElementsById("fImage").addEventListener("click", function() {

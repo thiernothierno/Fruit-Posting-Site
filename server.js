@@ -280,7 +280,7 @@ app.post("/api/posts/edit/:id", async(req, res) => {
     try{
         const response = await axios.patch(`${API_URL}/posts/${req.params.id}`, {name: name, email:email, favorite_fruit:favorite_fruit, text:text, userID : userID, role : role});  
         console.log(response.data)
-        return res.redirect("/get-all-posts")
+        return res.redirect("/get-all-posts") 
     } catch(error){
         return res.render("delete_error.ejs")
     }
