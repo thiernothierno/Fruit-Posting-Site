@@ -108,7 +108,15 @@
             Kumquat : "https://th.bing.com/th/id/OIP.Kac2Cu90CcQ29xXc0krVjQHaE8?w=247&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
             Plantain : "https://th.bing.com/th/id/OIP.u9O_KEAUm5dGKDYG0_9eIAHaEK?w=253&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
             Olive : "https://th.bing.com/th/id/OIP.liO8pa7KXlIOD97GTkhzBgHaE7?w=267&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
-            
+            Quince : "https://th.bing.com/th/id/OIP.PhnKo_rrhtpcap8JaIAMKwHaHa?w=186&h=186&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Yuzu : "https://th.bing.com/th/id/OIP.kvr_3B3cWIAHgL-QG0mzpwHaE8?w=258&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Breadfruit : "https://th.bing.com/th/id/OIP.1T68UO9AvBMPoLJTN2Z_OwHaGE?w=192&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Tamarillo : "https://th.bing.com/th/id/OIP.TffrbanHr2G3Xf76z4MxbwHaE7?w=306&h=204&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Mangosteen : "https://th.bing.com/th/id/OIP.5PUHNt3Vuv1RbX6p6c7qDAHaFj?w=240&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Langsat : "https://th.bing.com/th/id/OIP.zVom5EtqA6MsK5AXhUVg3wHaFj?w=249&h=187&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Santol: "https://th.bing.com/th/id/OIP.-UWVFEoewSjcAa1dqqtBbQHaFG?w=260&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Mamoncillo : "https://th.bing.com/th/id/OIP.ShSHprmpU7wctzlkaKq95wHaFW?w=293&h=212&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Genip : "https://th.bing.com/th/id/OIP.DR2Fraqons5us8W3V2YeAwHaE8?w=268&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3"
             }
     
        
