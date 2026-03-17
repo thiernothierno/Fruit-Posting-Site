@@ -84,8 +84,32 @@
             Cantaloupe : "https://th.bing.com/th/id/OIP.keRlXXxjNvzdBjIp_HNF6AHaFO?w=209&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
             Honeydrew : "https://th.bing.com/th/id/OIP.mZDhcV6LTVfAJ2aKcL_KRQHaFS?w=222&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
             Grapefruit : "https://th.bing.com/th/id/OIP.pITzY9neU8xyuYE62rLvVAHaEv?w=273&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
-
-        }
+            Tangerine : "https://m.media-amazon.com/images/I/616F+0ZpblL._SL1200_.jpg",
+            Clemantine : "https://thumbs.dreamstime.com/z/fresh-clementine-cut-half-wooden-base-clementines-products-organic-farming-photographed-antique-table-82690093.jpg",
+            Persimmon : "https://tse1.mm.bing.net/th/id/OIP.1o7tJxjbX_il2l6MsfQaXgHaFS?rs=1&pid=ImgDetMain&o=7&rm=3",
+            Lychee : "https://tse2.mm.bing.net/th/id/OIP.zvD2LhRncuROEDjc4YeMJAHaF7?rs=1&pid=ImgDetMain&o=7&rm=3",
+            Longan : "https://facts.net/wp-content/uploads/2023/07/17-facts-about-longan-1689354883.jpg",
+            Rambutan : "https://tse1.mm.bing.net/th/id/OIP.jvKrtRWifiSdjD3v9KOUdwHaFj?rs=1&pid=ImgDetMain&o=7&rm=3",
+            Durian : "https://cdn.theculturetrip.com/wp-content/uploads/2019/08/c19k56.jpg",
+            Jackfruit : "https://healthyfamilyproject.com/wp-content/uploads/2020/05/Jackfruit-background.jpg",
+            Mulberry : "https://c8.alamy.com/comp/M4EC86/fresh-mulberry-fruit-M4EC86.jpg",
+            Gooseberry : "https://tse3.mm.bing.net/th/id/OIP.wTtCRL8Q42IRZ4yRqs-wOwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
+            Cranberry : "https://tse1.mm.bing.net/th/id/OIP.xEf7GBjmEzndlOKNlVHzeQHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
+            Elderberry : "https://c8.alamy.com/comp/C8GGDJ/fresh-picked-elder-or-elderberry-berries-fruit-with-leaves-sambucus-C8GGDJ.jpg",
+            Boysenberry : "https://healthiersteps.com/wp-content/uploads/2022/09/boysenberry-fruit.jpg",
+            Cloudberry : "https://fruitorvegetable.science/assets/images/cloudberries.jpg",
+            Huckleberry : "https://agriexotic.com/wp-content/uploads/2022/05/huckleberries.jpg",
+            Atemoya : "https://th.bing.com/th/id/OIP.517WkMPTpB1F3Z6Mf1OSKAHaJ4?w=149&h=199&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Cherimoya : "https://th.bing.com/th/id/OIP.gF0R50lkQXqxnlv6m44XxwHaE7?w=272&h=181&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Jabuticaba : "https://th.bing.com/th/id/OIP.-WC94yWoBndWiL2DDGJPUwHaD4?w=254&h=189&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Mangosteen : "https://th.bing.com/th/id/OIP.-m0T7RFssAx8h28yc14MmgHaDt?w=341&h=175&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Langsat : "https://th.bing.com/th/id/OIP.zH5TBx-kurQUGQC1RGS08gHaE-?w=282&h=190&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Pomelo : "https://th.bing.com/th/id/OIP.eaUrEFPBGXPqlyKPojrydAHaHa?w=238&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Kumquat : "https://th.bing.com/th/id/OIP.Kac2Cu90CcQ29xXc0krVjQHaE8?w=247&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Plantain : "https://th.bing.com/th/id/OIP.u9O_KEAUm5dGKDYG0_9eIAHaEK?w=253&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            Olive : "https://th.bing.com/th/id/OIP.liO8pa7KXlIOD97GTkhzBgHaE7?w=267&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3",
+            
+            }
     
        
 
@@ -145,25 +169,7 @@
 getImage()
 
    
-/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function userProfile() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
   
    
   
