@@ -6,6 +6,8 @@ import bcrypt from "bcrypt"
 import 'dotenv/config'
 import userDatabase from "./userDatabase.js";
 import session from "express-session"
+import nodemailer from "nodemailer"
+import crypto from "crypto"
 
 
 const app = express();
@@ -167,45 +169,187 @@ app.get("/password-reset", (req, res) => {
 })
 
 // Password reset
-app.post("/reset-password", async(req, res) => {
+// Nodemailer is a Node.js library that lets your backend send emails programmatically—for things like password resets, verification emails, notifications, etc.
+// Forgot Password → Email → Click Link → Reset Form → New Password
+
+app.post("/forgot-password", async(req, res) => {
     const email = req.body.email;
-    const newPassword = req.body.new_password;
-    const repeatNewPassword = req.body.repeat_new_password;
     try{
         const result = await userDatabase.query("select * from users where email=$1", [email]);
         if(result.rows.length > 0){
             const user = result.rows[0];
-            const storedPassword = user.password;
-             if(newPassword != repeatNewPassword){
-                return res.render("regist_error.ejs")
-            } 
-            else{
-                bcrypt.hash(newPassword, saltRounds, async (err, hash)=>{
-                if(err){
-                    return res.send("Error hashing the password :", err)
-                } else{
-                    console.log("Old Password: ", storedPassword);
-                    console.log("New Password: ", hash)
-                    await userDatabase.query(
-                    `UPDATE users
-                    SET password=$1
-                    WHERE email=$2`,
-                    [hash, email]
-                    );
-                    return res.redirect("/login")     
+            // Generate token
+            const token = crypto.randomBytes(32).toString("hex");
+
+            // Expiry (15 min)
+            const expiry = new Date(Date.now() + 15 * 60 * 1000);
+
+            // Save to DB
+            await userDatabase.query(
+            "UPDATE users SET reset_token=$1, reset_token_expiry=$2 WHERE email=$3",
+            [token, expiry, email]
+            );
+
+            // Send email (pseudo)
+            const resetLink = `http://localhost:3000/reset-password/${token}`;
+
+            const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    user: process.env.OWNER_EMAIL,
+                    pass: process.env.OWNER_PASSWOR
                 }
-            })
+                });
+            
+            transporter.sendMail({
+                to: email,
+                subject: "Password Reset",
+                html: `<a href="${resetLink}">Reset Password</a>`
+                });
 
-            }
-
-        }else{
-            return res.redirect("/register")
+            res.send("If an account exists, a reset link has been sent.");
         }
+    //         const storedPassword = user.password;
+    //          if(newPassword != repeatNewPassword){
+    //             return res.render("regist_error.ejs")
+    //         } 
+    //         else{
+    //             bcrypt.hash(newPassword, saltRounds, async (err, hash)=>{
+    //             if(err){
+    //                 return res.send("Error hashing the password :", err)
+    //             } else{
+    //                 console.log("Old Password: ", storedPassword);
+    //                 console.log("New Password: ", hash)
+    //                 await userDatabase.query(
+    //                 `UPDATE users
+    //                 SET password=$1
+    //                 WHERE email=$2`,
+    //                 [hash, email]
+    //                 );
+    //                 return res.redirect("/login")     
+    //             }
+    //         })
+
+    //         }
+
+    //     }else{
+    //         return res.redirect("/register")
+    //     }
     }catch(err){
-        console.log(err);
+        return res.send("If an account exists, a reset link has been sent.");
     }
 
 })
+
+
+// Step2: Reset Link route
+app.get("/reset-password/:token", async (req, res) => {
+  const { token } = req.params;
+
+  const user = await userDatabase.query(
+    "SELECT * FROM users WHERE reset_token=$1",
+    [token]
+  );
+
+  if (user.rows.length === 0) {
+    return res.send("Invalid or expired token");
+  }
+
+  const expiry = user.rows[0].reset_token_expiry;
+
+  if (new Date() > expiry) {
+    return res.send("Token expired");
+  }
+
+  // Show reset form
+  res.render("reset-password.ejs", { token });
+});
+
+
+
+// Step 3: Submit New Password
+app.post("/reset-password/:token", async (req, res) => {
+  const { token } = req.params;
+  const { password, confirmPassword } = req.body;
+  if(password != confirmPassword){
+        return res.render("regist_error.ejs")
+    } 
+    else{
+        const user = await userDatabase.query(
+        "SELECT * FROM users WHERE reset_token=$1",
+        [token]
+        );
+
+        if (user.rows.length === 0) {
+            return res.send("Invalid token");
+        }
+
+        const token_validation = user.rows[0].reset_token_expiry;
+
+        if (new Date() > token_validation) {
+            return res.send("Token expired");
+        }
+
+        // Hash new password
+        const hashedPassword = await bcrypt.hash(password, saltRounds, async(err, hash) => {
+            if(err){
+                return res.send("Error hashing the password :", err)
+            }else{
+                // Update password + remove token
+                await db.query(
+                    `UPDATE users 
+                    SET password=$1, reset_token=NULL, reset_token_expiry=NULL 
+                    WHERE reset_token=$2`,
+                    [hashedPassword, token]
+                );
+                return res.redirect("/login")  
+            }
+        });
+        res.send("Password updated successfully");
+    }
+  
+});
+
+
+// app.post("/forgot-password", async(req, res) => {
+//     const email = req.body.email;
+//     const newPassword = req.body.new_password;
+//     const repeatNewPassword = req.body.repeat_new_password;
+//     try{
+//         const result = await userDatabase.query("select * from users where email=$1", [email]);
+//         if(result.rows.length > 0){
+//             const user = result.rows[0];
+//             const storedPassword = user.password;
+//              if(newPassword != repeatNewPassword){
+//                 return res.render("regist_error.ejs")
+//             } 
+//             else{
+//                 bcrypt.hash(newPassword, saltRounds, async (err, hash)=>{
+//                 if(err){
+//                     return res.send("Error hashing the password :", err)
+//                 } else{
+//                     console.log("Old Password: ", storedPassword);
+//                     console.log("New Password: ", hash)
+//                     await userDatabase.query(
+//                     `UPDATE users
+//                     SET password=$1
+//                     WHERE email=$2`,
+//                     [hash, email]
+//                     );
+//                     return res.redirect("/login")     
+//                 }
+//             })
+
+//             }
+
+//         }else{
+//             return res.redirect("/register")
+//         }
+//     }catch(err){
+//         console.log(err);
+//     }
+
+// })
 
 // Delete user 
 app.get("/delete-user/:id", async(req, res)=>{
