@@ -49,7 +49,8 @@ app.get("/get-all-posts", async(req, res) => {
         const role = req.session.role;
         const response = await axios.get(`${API_URL}/posts`);
         console.log(response.data.posts)
-        return res.render("all-post.ejs", {posts : response.data.posts, upvote_fruit : response.data.upvote_fruit,
+        return res.render("all-post.ejs", {posts : response.data.posts, upvote_fruit : response.data.upvote_fruit, 
+            total_post : response.data.total_post
         })
 
     } catch(error){
@@ -99,7 +100,6 @@ app.post("/user-register", async(req, res)=> {
         else
         {
             if(userPassword != repeatPassword){
-                // return res.send("Password don't match. Try Again.");
                 return res.render("regist_error.ejs")
             } 
             else{
@@ -209,37 +209,11 @@ app.post("/forgot-password", async(req, res) => {
             transporter.sendMail({
                 to: email,
                 subject: "Password Reset",
-                html: `<a href="${resetLink}">Reset Password</a>`
+                html: `<a href="${resetLink}">Use this link to reset your password.</a>`
                 });
 
             return res.send("If an account exists, a reset link has been sent.");
         }
-    //         const storedPassword = user.password;
-    //          if(newPassword != repeatNewPassword){
-    //             return res.render("regist_error.ejs")
-    //         } 
-    //         else{
-    //             bcrypt.hash(newPassword, saltRounds, async (err, hash)=>{
-    //             if(err){
-    //                 return res.send("Error hashing the password :", err)
-    //             } else{
-    //                 console.log("Old Password: ", storedPassword);
-    //                 console.log("New Password: ", hash)
-    //                 await userDatabase.query(
-    //                 `UPDATE users
-    //                 SET password=$1
-    //                 WHERE email=$2`,
-    //                 [hash, email]
-    //                 );
-    //                 return res.redirect("/login")     
-    //             }
-    //         })
-
-    //         }
-
-    //     }else{
-    //         return res.redirect("/register")
-    //     }
     }catch(err){
         return res.send("If an account exists, a reset link has been sent.");
     }
@@ -277,7 +251,7 @@ app.post("/reset-password/:token", async (req, res) => {
   const { token } = req.params;
   const { password, confirmPassword } = req.body;
   if(password != confirmPassword){
-        return res.render("regist_error.ejs")
+        return res.render("no-matching-password.ejs")
     } 
     else{
         const user = await userDatabase.query(
@@ -310,7 +284,6 @@ app.post("/reset-password/:token", async (req, res) => {
                 return res.redirect("/login")  
             }
         });
-        // return res.send("Password updated successfully");
     }
   
 });
