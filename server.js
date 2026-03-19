@@ -51,6 +51,7 @@ app.get("/get-all-posts", async(req, res) => {
         console.log(response.data.posts)
         return res.render("all-post.ejs", {posts : response.data.posts, upvote_fruit : response.data.upvote_fruit, 
             total_post : response.data.total_post
+           
         })
 
     } catch(error){

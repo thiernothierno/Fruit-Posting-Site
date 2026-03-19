@@ -61,19 +61,12 @@ app.post("/contact", async(req, res) => {
 })
 
 
-
-
-// Tracking the name of all fruit posted  
-const post = {}; 
-const total_post = await postDatabase.query("Select count(*) from posts")
-console.log("total post" , total_post.rows)
-
 // Get all post
 app.get("/posts", async(req, res) => {
     // Retrieve total number of post 
     const total_post = await postDatabase.query("select count(*) from posts");
     // query the post database 
-    const posts = await postDatabase.query("select count* from posts");
+    const posts = await postDatabase.query("select * from posts");
     
     const result = await postDatabase.query(`
         SELECT favorite_fruit, COUNT(*) AS votes
@@ -95,7 +88,7 @@ app.get("/posts", async(req, res) => {
     res.json({
         posts : posts.rows,
         upvote_fruit : upvote_fruit,
-        total_post : total_post.rows[0]
+        total_post : total_post.rows[0]['count']
        
     });
 
