@@ -161,8 +161,7 @@
     });
 
 
-    // document.getElementById("Mybtn").addEventListener("click", upvoteFruit);  
-
+    // Retrieve the upvoted fruit.  
     function upvoteFruit(){ 
        const fruit =  document.getElementById("upvoted_fruit") 
        // show most upvoted fruit.
@@ -171,6 +170,18 @@
         setTimeout(() => {
         fruit.style.display = "none";
         }, 3000);
+    }
+
+
+    // Retrieve the total number of post made.
+    function totalPost(){
+        const total_post = document.getElementById("total-post")
+        // show total post
+        total_post.style.display = "block"
+        // hide after 3 seconds
+        setTimeout(() => {
+            total_post.style.display = "none"
+        }, 3000)
     }
 
 
