@@ -164,9 +164,9 @@ app.post("/user-login", async(req, res) => {
 })
 
 // Password reset form
-// app.get("/password-reset", (req, res) => {
-//     return res.render("reset-password.ejs")
-// })
+app.get("/forgot-password", (req, res) => {
+    return res.render("forgot-password.ejs")
+})
 
 
 // Password reset
@@ -181,34 +181,38 @@ app.post("/forgot-password", async(req, res) => {
             const user = result.rows[0];
             // Generate token
             const token = crypto.randomBytes(32).toString("hex");
+            console.log("User token is :", token)
 
             // Expiry (15 min)
-            const expiry = new Date(Date.now() + 15 * 60 * 1000);
+            const token_expiration = new Date(Date.now() + 15 * 60 * 1000);
+            console.log("Token expiration date: ", token_expiration)
 
             // Save to DB
             await userDatabase.query(
             "UPDATE users SET reset_token=$1, reset_token_expiry=$2 WHERE email=$3",
-            [token, expiry, email]
+            [token, token_expiration, email]
             );
 
             // Send email (pseudo)
             const resetLink = `http://localhost:3000/reset-password/${token}`;
+            console.log("Email pseudo: ", resetLink)
 
             const transporter = nodemailer.createTransport({
                 service: "gmail",
                 auth: {
                     user: process.env.OWNER_EMAIL,
-                    pass: process.env.OWNER_PASSWOR
+                    pass: process.env.OWNER_PASSWORD
                 }
                 });
             
+            console.log("Transporter: ", transporter)
             transporter.sendMail({
                 to: email,
                 subject: "Password Reset",
                 html: `<a href="${resetLink}">Reset Password</a>`
                 });
 
-            res.send("If an account exists, a reset link has been sent.");
+            return res.send("If an account exists, a reset link has been sent.");
         }
     //         const storedPassword = user.password;
     //          if(newPassword != repeatNewPassword){
@@ -263,7 +267,7 @@ app.get("/reset-password/:token", async (req, res) => {
   }
 
   // Show reset form
-  res.render("reset-password.ejs", { token });
+  return res.render("reset-password.ejs", { token });
 });
 
 
@@ -292,21 +296,21 @@ app.post("/reset-password/:token", async (req, res) => {
         }
 
         // Hash new password
-        const hashedPassword = await bcrypt.hash(password, saltRounds, async(err, hash) => {
+         await bcrypt.hash(password, saltRounds, async(err, hash) => {
             if(err){
                 return res.send("Error hashing the password :", err)
             }else{
                 // Update password + remove token
-                await db.query(
+                await userDatabase.query(
                     `UPDATE users 
                     SET password=$1, reset_token=NULL, reset_token_expiry=NULL 
                     WHERE reset_token=$2`,
-                    [hashedPassword, token]
+                    [hash, token]
                 );
                 return res.redirect("/login")  
             }
         });
-        res.send("Password updated successfully");
+        // return res.send("Password updated successfully");
     }
   
 });
