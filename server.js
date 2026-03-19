@@ -164,9 +164,10 @@ app.post("/user-login", async(req, res) => {
 })
 
 // Password reset form
-app.get("/password-reset", (req, res) => {
-    return res.render("reset-password.ejs")
-})
+// app.get("/password-reset", (req, res) => {
+//     return res.render("reset-password.ejs")
+// })
+
 
 // Password reset
 // Nodemailer is a Node.js library that lets your backend send emails programmatically—for things like password resets, verification emails, notifications, etc.
