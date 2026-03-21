@@ -8,6 +8,7 @@ import userDatabase from "./userDatabase.js";
 import session from "express-session"
 import nodemailer from "nodemailer"
 import crypto from "crypto"
+import postDatabase from "./postDatabase.js"
 
 
 const app = express();
@@ -289,46 +290,25 @@ app.post("/reset-password/:token", async (req, res) => {
   
 });
 
+// Search post by fruit name
+app.get("/search", async (req, res) => {
+  const {fruit_name} = req.query;
 
-// app.post("/forgot-password", async(req, res) => {
-//     const email = req.body.email;
-//     const newPassword = req.body.new_password;
-//     const repeatNewPassword = req.body.repeat_new_password;
-//     try{
-//         const result = await userDatabase.query("select * from users where email=$1", [email]);
-//         if(result.rows.length > 0){
-//             const user = result.rows[0];
-//             const storedPassword = user.password;
-//              if(newPassword != repeatNewPassword){
-//                 return res.render("regist_error.ejs")
-//             } 
-//             else{
-//                 bcrypt.hash(newPassword, saltRounds, async (err, hash)=>{
-//                 if(err){
-//                     return res.send("Error hashing the password :", err)
-//                 } else{
-//                     console.log("Old Password: ", storedPassword);
-//                     console.log("New Password: ", hash)
-//                     await userDatabase.query(
-//                     `UPDATE users
-//                     SET password=$1
-//                     WHERE email=$2`,
-//                     [hash, email]
-//                     );
-//                     return res.redirect("/login")     
-//                 }
-//             })
+  let result;
 
-//             }
+  if (fruit_name) {
+    result = await postDatabase.query(
+      "SELECT * FROM posts WHERE favorite_fruit ILIKE $1",
+      [`%${fruit_name}%`]
+    );
+  } else {
+    result = await postDatabase.query("SELECT * FROM posts");
+  }
 
-//         }else{
-//             return res.redirect("/register")
-//         }
-//     }catch(err){
-//         console.log(err);
-//     }
-
-// })
+  return res.redirect("all-post.ejs")
+//   return res.render("all-post.ejs", {posts : result.rows})
+//   res.json(result.rows);
+});
 
 // Delete user 
 app.get("/delete-user/:id", async(req, res)=>{
