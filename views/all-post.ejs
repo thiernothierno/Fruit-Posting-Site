@@ -5,10 +5,10 @@
         <button class="postResult" onclick="totalPost()">Number of Post</button>
         <p class="post-result" id="total-post" style="display: none"><%= total_post %></p>
     </div>
-        <div class="articles">
-            <% if (posts.length === 0) { %>
+        <% if (posts.length === 0) { %>
                 <p class="searchNotFound">No post to display.</p>
-            <% } %>
+        <% } %>
+        <div class="articles">
             <% posts.forEach(post => { %>  
                     <div class="post-content"> 
                         

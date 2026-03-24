@@ -352,14 +352,7 @@ input[type=submit]:hover {
 
 }
 
-
-/* Search bar */
-/* .search {
-    flex-grow: 0.5;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-} */
+/* Search bar  */
 
 .search input[type="text"] {
     padding: 6px;

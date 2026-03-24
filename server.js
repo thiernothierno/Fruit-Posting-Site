@@ -230,6 +230,8 @@ app.post("/forgot-password", async(req, res) => {
                 });
 
             return res.send("If an account exists, a reset link has been sent.");
+        } else{
+            return res.redirect("/register")
         }
     }catch(err){
         return res.send("If an account exists, a reset link has been sent.");
