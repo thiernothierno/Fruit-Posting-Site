@@ -57,7 +57,23 @@ app.get("/get-all-posts", async(req, res) => {
     } catch(error){
         return res.status(500).json({message:"Error fetching data"});
     }
-})
+});
+
+// Search post by fruit name
+app.get("/searchByFruitName", async (req, res) => {
+  try {
+        const { fruit_name } = req.query;
+        const response = await axios.get(`${API_URL}/search`, {params : {fruit_name : fruit_name}});
+        return res.render("search-result.ejs", {posts : response.data.posts, upvote_fruit : response.data.upvote_fruit, 
+            total_post : response.data.total_post
+           
+        })
+           
+
+    } catch(error){
+        return res.status(500).json({message:"Error searching a post."})
+    }
+});
 
 // Route to render the About page
 app.get("/about", (req, res) =>{ 
@@ -289,36 +305,7 @@ app.post("/reset-password/:token", async (req, res) => {
   
 });
 
-// Search post by fruit name
-app.get("/search", async (req, res) => {
-  const { fruit_name } = req.query;
 
-  let result;
-
-  if (fruit_name) {
-    result = await postDatabase.query(
-      "SELECT * FROM posts WHERE favorite_fruit ILIKE $1",
-      [`%${fruit_name}%`]
-    );
-  } else {
-    result = await postDatabase.query("SELECT * FROM posts");
-  }
-
-  res.json(result.rows);
-});
-// app.post("/search", async (req, res) => {
-//     try {
-//         const fruit_name = req.body.fruit_name;
-//         const response = await axios.post(`${API_URL}/search`, {fruit_name : fruit_name});
-//         console.log(response.data)
-//         return res.redirect("/get-all-posts");
-           
-
-//     } catch(error){
-//         return res.status(500).json({message:"Error dat creating post."})
-//     }
-
-// });
 
 // Delete user 
 app.get("/delete-user/:id", async(req, res)=>{

@@ -97,39 +97,32 @@ app.get("/posts", async(req, res) => {
 
 // Search post by fruit name
 
-// app.post("/search", async(req, res) => {
-//     // Retrieve total number of post 
-//     const total_post = await postDatabase.query("select count(*) from posts");
+app.get("/search", async(req, res) => {
+    // Retrieve total number of post 
+    const {fruit_name} = req.query;
+    let result;
+    let total_post;
+    let upvote_fruit;
+    if (fruit_name) {
+    result = await postDatabase.query(
+      "SELECT * FROM posts WHERE favorite_fruit ILIKE $1",
+      [`%${fruit_name}%`]
+    );
+  } else {
+    result = await postDatabase.query("SELECT * FROM posts");
+  }
 
-//     const {fruit_name} = req.body;
-//     let result;
-//     let upvote_fruit;
-//     if (fruit_name) {
-//     result = await postDatabase.query(
-//       "SELECT * FROM posts WHERE favorite_fruit ILIKE $1",
-//       [`%${fruit_name}%`]
-//     );
-//   } else {
-//     result = await postDatabase.query("SELECT * FROM posts");
-//   }
+  res.json({
+    posts : result.rows,
+    total_post : result.rows.length,
+    upvote_fruit : fruit_name
 
-//   res.json({
-//     posts : result.rows,
-//     total_post : total_post,
-//     upvote_fruit : fruit_name
+  })
 
-//   })
-
-// })
-
-
-//   const {fruit_name} = req.query;
-
-//   let result;
+})
 
 
-// //   return res.render("all-post.ejs", {posts : result.rows})
-//   res.json(result.rows);
+
 
 // Make a post
 app.post("/posts", async (req, res) => {  
