@@ -49,7 +49,6 @@ app.get("/get-all-posts", async(req, res) => {
         const userID = req.session.userID;
         const role = req.session.role;
         const response = await axios.get(`${API_URL}/posts`);
-        console.log(response.data.posts)
         return res.render("all-post.ejs", {posts : response.data.posts, upvote_fruit : response.data.upvote_fruit, 
             total_post : response.data.total_post
            
@@ -292,7 +291,7 @@ app.post("/reset-password/:token", async (req, res) => {
 
 // Search post by fruit name
 app.get("/search", async (req, res) => {
-  const {fruit_name} = req.query;
+  const { fruit_name } = req.query;
 
   let result;
 
@@ -305,10 +304,21 @@ app.get("/search", async (req, res) => {
     result = await postDatabase.query("SELECT * FROM posts");
   }
 
-  return res.redirect("all-post.ejs")
-//   return res.render("all-post.ejs", {posts : result.rows})
-//   res.json(result.rows);
+  res.json(result.rows);
 });
+// app.post("/search", async (req, res) => {
+//     try {
+//         const fruit_name = req.body.fruit_name;
+//         const response = await axios.post(`${API_URL}/search`, {fruit_name : fruit_name});
+//         console.log(response.data)
+//         return res.redirect("/get-all-posts");
+           
+
+//     } catch(error){
+//         return res.status(500).json({message:"Error dat creating post."})
+//     }
+
+// });
 
 // Delete user 
 app.get("/delete-user/:id", async(req, res)=>{
